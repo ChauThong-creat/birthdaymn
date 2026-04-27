@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quà Tặng Mỹ Ngân 🌸</title>
+    <style>
+        :root {
+            --mint-bg: #e0f2f1;
+            --mint-dark: #00bfa5;
+            --pink-cute: #ff85a1;
+            --text-color: #004d40;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--mint-bg);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            height: 100vh;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stage {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: absolute;
+        }
+
+        .active {
+            display: flex;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- STAGE 1: START & COUNTDOWN --- */
+        #start-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .btn-start {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            background: var(--pink-cute);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(255,133,161,0.3);
+            transition: 0.3s;
+        }
+
+            .btn-start:hover {
+                transform: scale(1.05);
+                background: #ff4d6d;
+            }
+
+        #timer {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            background: var(--mint-dark);
+            padding: 15px 35px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* --- STAGE 2: GẤU ĐẨY QUÀ --- */
+        #bear-group {
+            position: absolute;
+            left: -400px;
+            bottom: 20%;
+            display: flex;
+            align-items: flex-end;
+            cursor: pointer;
+            transition: left 10s linear;
+        }
+
+        .bear {
+            font-size: 6rem;
+            animation: walk 0.6s infinite alternate;
+            order: 2;
+        }
+
+        .gift {
+            font-size: 4.5rem;
+            order: 1;
+            margin-right: -10px;
+        }
+
+        @keyframes walk {
+            0% {
+                transform: rotate(-5deg);
+            }
+
+            100% {
+                transform: rotate(5deg) translateY(-10px);
+            }
+        }
+
+        .bear-talk {
+            position: absolute;
+            top: -110px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 12px 20px;
+            border-radius: 15px;
+            width: 280px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+            display: none;
+        }
+
+            .bear-talk:after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-top: 10px solid white;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+            }
+
+        /* --- STAGE 3: BƯU THIẾP --- */
+        .postcard {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px dashed var(--mint-dark);
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        #typing-text {
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            min-height: 100px;
+        }
+
+        /* --- STAGE 4: GALLERY POLAROID --- */
+        .polaroid {
+            position: absolute;
+            width: 150px;
+            padding: 10px 10px 30px;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: floatUp 8s linear forwards;
+        }
+
+            .polaroid img {
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+            }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-20vh) rotate(20deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- STAGE 5: KẾT THÚC --- */
+        .final-banner {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ff4d6d;
+            text-shadow: 2px 2px white, 0 0 20px rgba(255,133,161,0.5);
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: var(--mint-dark);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="move-sound" src="move.mp3" loop></audio>
+    <audio id="bg-music" src="crush.mp3" loop></audio>
+
+    <div id="stage-1" class="stage active">
+        <div id="start-screen">
+            <h2 style="color: var(--mint-dark);">Chào Mỹ Ngân 🌸</h2>
+            <button class="btn-start" id="start-btn" onclick="initGift()">Bấm để mở hộp quà nhé 🎁</button>
+        </div>
+        <div id="countdown-area" style="display:none; margin-top: 20px;">
+            <p>Sắp đến ngày đặc biệt của Ngân rồi...</p>
+            <div id="timer">00d : 00h : 00m : 00s</div>
+            <p style="font-size: 0.8rem; color: #888; cursor: pointer; margin-top: 15px;" onclick="triggerBear()">[Bấm đây để xem thử gấu đẩy quà ngay]</p>
+        </div>
+    </div>
+
+    <div id="stage-2" class="stage">
+        <div id="bear-group" onclick="startPostcard()">
+            <div class="bear">🐻</div>
+            <div class="gift">📦</div>
+            <div class="bear-talk" id="talk-bubble">Ngân ơi, có bưu kiện đặc biệt dành cho bạn nè! Bấm vào để mở nhé ✨</div>
+        </div>
+    </div>
+
+    <div id="stage-3" class="stage">
+        <div class="postcard">
+            <div id="typing-text"></div>
+            <button class="btn" id="next-btn" style="display:none;" onclick="startGallery()">Xem điều bất ngờ tiếp theo ✨</button>
+        </div>
+    </div>
+
+    <div id="stage-4" class="stage">
+        <h2 style="background: white; padding: 10px 25px; border-radius: 30px; z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">Mong em luôn rạng rỡ ✨</h2>
+    </div>
+
+    <div id="stage-5" class="stage">
+        <div class="final-banner">Wish you always beauty! <br> 💖✨💖</div>
+    </div>
+
+    <script>
+        // Cấu hình
+        const targetDate = new Date('May 5, 2026 00:00:00').getTime();
+        const photos = ["anh1.jpg", "anh2.jpg", "anh3.jpg", "anh4.jpg", "anh5.jpg", "anh6.jpg", "anh7.jpg", "anh8.jpg", "anh9.jpg", "anh10.jpg"];
+        const message = "Gửi Mỹ Ngân,\n\nChúc em tuổi mới thật rực rỡ, hạnh phúc, luôn xinh đẹp và luôn gặp nhiều điều tốt đẹp may mắn. Nhớ ít khóc lại nghen. Cảm ơn em đã luôn là một phần thật đẹp!\n\nYou are my crush! ❤️";
+
+        function changeStage(n) {
+        document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+        document.getElementById('stage-' + n).classList.add('active');
+        }
+
+        // Bước 1: Mở khóa âm thanh & chạy Timer
+        function initGift() {
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('countdown-area').style.display = 'block';
+
+        // Mồi âm thanh
+        const moveSound = document.getElementById('move-sound');
+        moveSound.play().then(() => { moveSound.pause(); moveSound.currentTime = 0; });
+
+        const timerInt = setInterval(() => {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+        if (diff <= 0) {
+        clearInterval(timerInt);
+        triggerBear();
+        } else {
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        document.getElementById('timer').innerText = `${d}d : ${h < 10 ? '0'+h : h}h : ${m < 10 ? '0'+m : m}m : ${s < 10 ? '0'+s : s}s`;
+        }
+        }, 1000);
+        }
+
+        // Bước 2: Gấu đẩy quà
+        function triggerBear() {
+        changeStage(2);
+        const bearGroup = document.getElementById('bear-group');
+        const moveAudio = document.getElementById('move-sound');
+
+        setTimeout(() => {
+        bearGroup.style.left = "50%";
+        bearGroup.style.transform = "translateX(-50%)";
+        moveAudio.play();
+        }, 500);
+
+        setTimeout(() => {
+        document.getElementById('talk-bubble').style.display = 'block';
+        moveAudio.pause();
+        }, 10500);
+        }
+
+        // Bước 3: Bưu thiếp gõ chữ
+        function startPostcard() {
+        document.getElementById('bg-music').play();
+        changeStage(3);
+        let i = 0;
+        function type() {
+        if (i < message.length) {
+        document.getElementById('typing-text').innerHTML += (message.charAt(i) === '\n' ? '<br>' : message.charAt(i));
+        i++; setTimeout(type, 70);
+        } else {
+        document.getElementById('next-btn').style.display = 'inline-block';
+        }
+        }
+        type();
+        }
+
+        // Bước 4: Mưa ảnh Polaroid
+        function startGallery() {
+        changeStage(4);
+        const galleryInterval = setInterval(() => {
+        const div = document.createElement('div');
+        div.className = 'polaroid';
+        div.style.left = Math.random() * 85 + 'vw';
+        const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
+        div.innerHTML = `<img src="anh/${randomPhoto}" onerror="this.parentElement.remove()">`;
+        document.getElementById('stage-4').appendChild(div);
+        setTimeout(() => div.remove(), 9000);
+        }, 1500);
+
+        // TỰ ĐỘNG CHUYỂN SANG ĐOẠN KẾT SAU 60 GIÂY
+        setTimeout(() => {
+        clearInterval(galleryInterval);
+        changeStage(5);
+        }, 60000);
+        }
+    </script>
+</body>
+</html>
